@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="../assets/css/button.css" rel="stylesheet">
+
+  <style>
+    #translateX:hover{
+      /* 요소 width 의 100% 만큼 x축으로 이동*/
+      transform: translateX(100%);
+      transition-duration: 1s;
+    }
+
+
+    #translateY:hover{
+      /* 요소 height 의 100% 만큼 y축으로 이동*/
+      transform: translateY(100%);
+      transition-duration: 1s;
+    }
+
+    #translate:hover{
+      /* 요소 width, height 의 100% 만큼 x, y축으로 이동*/
+      transform: translate(100%, 100%);
+      transition-duration: 1s;
+    }
+
+  </style>
+</head>
+<body>
+  <h2>transform</h2>
+  <div id="translateX" class="btn btn-red btn-l">
+    요소를 x축으로 이동
+  </div>
+  <div id="translateY" class="btn btn-blue btn-m">
+    요소를 y축으로 이동
+  </div>
+  <div id="translate" class="btn btn-green btn-s">
+    요소를 x축으로 이동
+  </div>
+</body>
+</html>
