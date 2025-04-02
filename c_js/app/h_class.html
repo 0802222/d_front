@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<h1>class</h1>
+<script>
+  class Person{
+    //public field
+    // this.name 에서 this. 이 생략된 모습임
+    name;
+    // private field
+    #gender;
+
+    // static
+    static species = 'mamalian';
+
+    // 상수
+    HABIT = 'earth';
+
+    constructor(name, gender) {
+      this.name = name;
+      this.#gender = gender;
+    }
+
+    // getter, setter 만들기
+    // get gender(){
+    //   return this.#gender;
+    // }
+    //
+    // set gender(gender){
+    //   this.#gender = gender;
+    // }
+
+    // 메서드 오버라이딩
+    toString(){
+      return `${this.name}, ${this.#gender}`;
+    }
+  }
+
+  const hmd = new Person('하명도', '남');
+  const shy = new Person('손혜은', '여');
+  console.dir(hmd);
+  console.dir(shy);
+  console.dir(hmd.name);
+  console.dir(hmd.gender);
+  console.dir(Person.species);
+
+
+  // gpt : const로 선언한 객체는 재할당은 불가능하지만,
+  // 내부 속성(HABIT 등)은 자유롭게 추가/수정할 수 있다.
+  hmd.HABIT = 'marth';
+  console.dir(hmd.HABIT);
+
+  class Employee extends Person{
+    // 프라이빗으로 캡슐화
+    //필드에서 this 생략됨
+    #company;
+
+
+    // _company 와 같은 명명규칙은 이제 잘 사용하지 않는다.
+    constructor(name, gender, company) {
+      super(name, gender);
+      this.#company = company;
+    }
+
+    get company() {
+      return this.#company;
+    }
+
+    toString(){
+      return `${this.name}, ${this.gender}, ${this.#company}`;
+    }
+  }
+  const hgd = new Employee('홍길동', '여', 'grepp');
+  console.dir(hgd);
+  hgd._company = 'samsung';
+  console.dir(hgd.company);
+
+  console.dir(hgd.toString());
+</script>
+</body>
+</html>

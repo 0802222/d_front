@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Constructor</h1>
+
+<!--
+생성자 함수 : 자바의 네임컨벤션 따라감(Exam)
+new 를 써서 객체로 만들 수 있고, 매개변수를 넣을 수 있음
+-->
+
+<h2>prototype 객체</h2>
+<pre>
+  함수 객체가 생성되면 객체를 prototype 속성으로 가지고 있다.
+  함수를 생성자 함수로 사용할 경우, 생성자함수에 의해 만들어진 객체는
+  __proto__ 속성으로 prototype 객체를 가지게된다.
+  객체는 프로토타입 객체가 가지고 있는 속성에 접근할 수 있다.
+  prototype 속성의 연쇄를 proto chain 이라고 한다.
+</pre>
+<script>
+  function Exam(academy, username, kor, eng, math){
+    this.academy = academy;
+    this.username = username;
+    this.kor = kor;
+    this.eng = eng;
+    this.math = math;
+    this.toString = function(){
+      return `academy : ${this.academy},
+              username : ${this.username},
+              kor : ${this.kor},
+              eng : ${this.eng},
+              math : ${this.math}`
+    }
+    console.log('Exam 함수 호출');
+
+  }
+
+  const hmd = new Exam('grepp', 'hmd', 100, 90, 70);
+  const ysk = new Exam('grepp', 'ysk', 100, 100, 100);
+  console.log(hmd);
+  console.log(ysk);
+
+  // 동적으로 추가해도 반영됨
+  hmd.dev = 100;
+  hmd.subject = 'java';
+  hmd.job ='lecture';
+  console.dir(hmd.toString());
+  console.log('===================');
+  //__proto__에 nation 이라는 속성 추가해보기
+  hmd.__proto__.nation = 'kor';
+
+  console.log(hmd);
+  console.log(ysk);
+
+
+  //임의로 프로토타입 변경해보기 > 상속받는 대상을 변경할 수 있음
+  const university = {
+    university : '한국대학교'
+  }
+
+  hmd.__proto__ = university;
+  console.log('hmd', hmd.university);
+  console.log('ysk', ysk.nation);
+
+
+  // 유사배열을 메서드가져다쓰게 해주고싶다 -> 프로토타입으로 바꿔서 빈배열을 만들어줌
+  const similarArray = {
+    0: 'hi',
+    1: 'hello',
+    2: 'bye',
+    length: 3
+  }
+
+  //similarArray.__proto__ = [];
+  //[].__proto__ = Array.prototype
+  //Array.prototype.__proto__ = object; //(잘 안쓰긴함)
+
+  // similarArray의 proto chain : [] Array.prototype, object
+  similarArray.__proto__ = [];
+  console.log();
+  similarArray.forEach(e => console.log(e));
+
+</script>
+</body>
+</html>

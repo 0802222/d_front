@@ -17,22 +17,29 @@ console.log(' a + b = ', add(10, 15));
 
 
 // 함수 표현식 (변수 호이스팅이 막히면서 함수 호이스팅도 불가능)
-// 함수를 변수에 넣게되면 익명함수로 써야됨
+// 함수를 변수에 대입 시, 함수명이 필요없어서 익명함수로 쓴다.
 const FncExpr = function (a, b){
   return a + b;
 }
 
-console.log(FncExpr)
+console.log(FncExpr) //Node.js 내부 디버깅 포맷 스타일
 console.log(FncExpr(1000,3000));
 
 
 
-// 매개변수로 함수 받기
+// callback 함수 :
+//  다른 함수에 인자로 전달되어, 특정시점에 호출되는 함수
+//  매개변수로 받은 함수를 호출
+//  용도 : 비동기 작업 끝난 후 실행, 순서보장, 이벤트 처리 등
+// 함수 선언
 const argFnc = function(fnc){
   fnc();
 }
 
-argFnc(function (){console.log('저는 callback 함수 입니다.')});
+// 함수 출력
+argFnc(function (){
+  console.log('저는 callback 함수 입니다.')
+});
 
 
 // 함수반환해보기
@@ -55,17 +62,56 @@ returnFnc()();
 // var 는 전역객체의 속성으로 등록됨
 var varTest = 'a';
 const cTest = 'A';
-console.dir(window);
+// console.dir(window);
 
 
 const rf = returnFnc();
 rf();
 rf();
-rf();
-rf();
-rf();
 
 
+//250402(수)
+console.log('==================');
+// 즉시실행함수 IIFE
+// 함수의 선언과 동시에 실행
+// 자바스크립트는 function 으로 시작하면 함수라고 생각함
+
+(function iife(){
+  console.log('선언과 동시에 실행')
+})();
+
+// 이렇게 써도 동일함
+// !function iife(){
+//   console.log('선언과 동시에 실행')
+// }();
 
 
+// 함수 표현식
+// (arg...) => {};
+// 1. 매개변수가 1개라면 매개변수 선언부의 괄호 생략 가능
+// 2. 코드블록에 return 문 만 있다면 함수body 의 {} 생략 가능
 
+let arr = [
+    '감자', '고구마', '옥수수'
+];
+
+arr.forEach(e =>{
+  console.log(e);
+});
+
+
+// 매개변수, 인덱스, 순회하고있는 배열도 확인가능
+arr.forEach((e, idx, arr) =>{
+  console.log(e);
+  console.log(idx);
+  console.log(arr);
+});
+
+
+// 자바스크립트는 오버로딩/오버라이딩 개념이 없고,
+// 전달된 인자 수에 상관없이 함수는 정의된 매개변수로만 동작함
+const argFunction = (t,s,u) => {
+  console.log(t);
+}
+
+argFunction('hi');

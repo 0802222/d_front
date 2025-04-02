@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Module</h1>
+<script type="module">
+  // import 이름 from 모듈
+  // export default 해준 요소가 c에 담긴다.
+  import c from './assets/js/module/ecma.js';
+  c();
+
+  import {odd as o, even as e, hmd, counter} from "./assets/js/module/ecma.js";
+  console.log(o);
+  console.log(e);
+  console.log(hmd);
+  console.log(counter);
+
+  counter();
+  counter();
+  counter();
+  counter();
+  counter(); // 모듈이 스코프를 기억하고 유지한다는 점에서 클로저랑 비슷함
+
+  // 스코프안에 모듈객체로 받아서 쓸수도있다.
+  import * as ecma from './assets/js/module/ecma.js';
+  console.dir(ecma);
+</script>
+</body>
+</html>

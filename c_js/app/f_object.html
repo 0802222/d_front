@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Object</h1>
+<script>
+  // 도서 정보
+  let top1 = {
+    title : '소년이 온다',
+    awards : ['노벨문학상', '이상문학상'],
+    category : {depth1: '문학', depth2: '소설'},
+    'categoryCode':12,
+    info: function (){
+      console.log(this.title);
+    }
+  }
+
+  let top2 = {
+    title : '당신의 이름을 지어다가 며칠은 먹었다',
+    awards : ['젊은 예술가상'],
+    category : {depth1: '문학', depth2: '시'},
+    'categoryCode':12,
+    info: function (){
+      console.log(this.title);
+    }
+  }
+
+  let top3 = {
+    title : 'Object',
+    awards : [],
+    category : {depth1: '기술', depth2: 'IT'},
+    'categoryCode':15,
+    info: function (){
+      console.log(this.title);
+    }
+  }
+
+  // 브라우저 개발자도구 콘솔에서 확인가능
+  console.dir(top1);
+  console.dir(top1.title);
+  console.dir(top1['title']);
+
+  // Object.keys(), Object.values()
+  // 이거 사용하면 가지고있는 속성,값 다 뽑을 수 있음
+  console.dir(Object.keys(top1))
+  console.dir(Object.values(top1))
+
+  for(const key in top2){
+    console.log('key', key);
+    console.log('value', top2[key]);
+  }
+
+  // 속성을 동적으로 추가 가능함
+  top3.add = function(a,b){
+    return a + b;
+  }
+  console.log(top3.add(100,200));
+
+  // 속성을 문자열로도 접근 가능함
+  // 자바 데코레이터 패턴할때는 동적으로 하기위해서 열심히노력했는데,
+  // 자바스크립트는 쉬움
+  top3['multiply'] = function (a,b){
+    return a + b;
+  }
+  console.log(top3.multiply(100, 100));
+</script>
+</body>
+</html>

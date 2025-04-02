@@ -45,7 +45,7 @@ studyScope();
 // 모든 것이 객체
 
 // primitive type : String, Number, Boolean, Null, Undefined
-// reference type :Object
+// reference type : Object
 
 // Null      : 개발자가 명시적으로 값이 없음을 나타내기 위해 할당하는 값
 // Undefined : 변수가 선언된 이후 초기화 되지 않았음. 자바스크립트 엔진이 자동으로 넣어주는 값

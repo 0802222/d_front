@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script>
+  // 자바스크립트 : Single thread 언어
+  // 비동기 : asynchronous
+  // 동기   : synchronous
+  // a + syn + chronous
+  // a(없다, 반대) syn(맞추다) chronous(시간)
+
+
+  // Blocking vs Non-Blocking
+  // Blocking (제어권 없음)
+  // - 작업이 끝날 때까지 현재 스레드가 멈춰서 대기한다.
+  // - 다른 작업을 수행할 수 없고, 제어권이 작업 처리 주체에게 있다.
+
+  // Non-Blocking (제어권 있음)
+  // - 요청만 보내고 기다리지 않는다.
+  // - 다른 작업을 계속 수행할 수 있으며, 제어권을 호출한 쪽이 유지한다.
+
+  //  Java Connection Pool 예시 (Blocking)
+  // - 예를 들어, take() 메서드가 호출될 때 리소스가 없다면, 해당 스레드는 대기 상태로 전환된다.
+  // - BlockingQueue는 내부적으로 접근한 스레드를 재운다.
+  // - 외부에서 리소스를 반납하면, 잠든 스레드가 깨어나 작업을 수행한다.
+  // - 제어권은 Connection Pool이 가지고 있다.
+  // - LinkedBlockingQueue 등도 같은 방식으로 동작한다.
+
+  // JavaScript는 Non-Blocking
+  // - 병렬 작업을 브라우저나 런타임에 위임하고, 나머지 코드를 계속 수행한다.
+  // - 제어권을 유지하면서 다음 작업을 처리할 수 있기 때문에 Non-Blocking 이다.
+
+
+  // 비동기로 실행되는 함수가 끝나는 시점과, 다음 로직이 시작되는 시점을 맞추지 않음
+  // 여러개의 비동기 작업 중 작업순서를 맞춰야하는 경우, callback 함수 안에서 다음 수행해야할 비동기작업을 시작
+  // callback hell 이슈가 발생
+
+  const callbackHell = () => {
+    setTimeout(() => {
+      console.log('1초');
+      setTimeout(() => {
+        console.log('2초');
+        setTimeout(() => {
+          console.log('3초');
+          setTimeout(() => {
+            console.log('4초');
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    }, 1000);
+    console.dir('끝!');
+  }
+
+  // Promise (비동기작업이 끝난다음에 어떤 작업을 해주겠다는 약속)
+  // 상태
+  // 1. pending   : 작업이 진행중
+  // 2. fulfilled : resolve() 호출, 작업이 성공적으로 끝남
+  // 3. rejected  : error 발생, rejected(), 작업이 실패로 끝남
+
+  // 후속 처리 메서드
+  // 1. then : Promise 가 fulfilled 상태일 때 호출(작업이 마무리되면 호출)
+  // 2. catch : Promise 가 rejected 상태일 때 호출
+  // 3. finally : 반드시 실행
+
+  const counter = (name, count) => {
+    return new Promise((resolve, reject) => {
+      if(count < 0){
+        reject(new Error('count 는 음수일 수 없습니다.'));
+        return;
+      }
+      setTimeout(() => {
+        console.log(name,count);
+        resolve(++count);
+      }, 1000);
+    });
+  }
+
+  const studyPromise = async () => {
+    return counter('hmd', 1)
+    .then(count => counter('hmd', count))
+    .then(count => counter('hmd', count))
+    .then(count => counter('hmd', count))
+    .then(count => counter('hmd', count))
+    .catch(error => console.error(error))
+    .finally(()=> console.log('finally'));
+  }
+
+
+
+  // async/ await
+  //  함수앞에 async 키워드 추가
+  //  async 함수는 promise를 자동으로 반환해준다.
+  // await : async 함수안에서 사용가능한 키워드, 비동기 코드를 동기적으로 다룰 수 있다.
+  //         promise 를 반환하는 함수를 호출할때 사용한다.
+  //         promise의 result 값을 반환해주는 역할도 수행한다.
+
+  const asyncCount = async (count) => {
+    // counter 함수호출해보자 (비동기 작업을 동기적으로 수행할 수 있음)
+
+    // 예외처리
+    try {
+      for (let i = 1; i <= count; i++) {
+        await counter('하명도', i)
+      }
+    }catch (error) {
+      console.error(error);
+    }finally {
+      console.log('finally');
+    }
+  }
+
+  // ProimseAll(에러가 나면 멈출거냐), PromiseAllSettled(에러가 발생하더라도 리젝트 반환하고 진행할거냐)
+  // const promiseAll = async () => {
+  //   await studyPromise();
+  //   await asyncCount(5);
+  // }
+
+  //둘다 프라미스를 반환하니까 await을 붙일 수 있음
+
+  // 다음 로직이 studyPromise, asyncCount의 결과에 의존하는 로직
+  const promiseAll = async () => {
+    const results = await Promise.allSettled([studyPromise(), asyncCount(2)]);
+    console.log(results);
+    console.log('다음로직을 수행해볼까?');
+  }
+
+  promiseAll();
+
+</script>
+<body>
+<h1>Async</h1>
+</body>
+</html>
