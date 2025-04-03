@@ -6,8 +6,8 @@
 </head>
 <script>
   // 자바스크립트 : Single thread 언어
-  // 비동기 : asynchronous
-  // 동기   : synchronous
+  // 비동기 : asynchronous (끝나는 시간을 맞추지않음)
+  // 동기   : synchronous  (끝나는 시간을 맞춤)
   // a + syn + chronous
   // a(없다, 반대) syn(맞추다) chronous(시간)
 
@@ -16,23 +16,23 @@
   // Blocking (제어권 없음)
   // - 작업이 끝날 때까지 현재 스레드가 멈춰서 대기한다.
   // - 다른 작업을 수행할 수 없고, 제어권이 작업 처리 주체에게 있다.
-
+  //
   // Non-Blocking (제어권 있음)
   // - 요청만 보내고 기다리지 않는다.
   // - 다른 작업을 계속 수행할 수 있으며, 제어권을 호출한 쪽이 유지한다.
-
+  //
   //  Java Connection Pool 예시 (Blocking)
   // - 예를 들어, take() 메서드가 호출될 때 리소스가 없다면, 해당 스레드는 대기 상태로 전환된다.
   // - BlockingQueue는 내부적으로 접근한 스레드를 재운다.
   // - 외부에서 리소스를 반납하면, 잠든 스레드가 깨어나 작업을 수행한다.
   // - 제어권은 Connection Pool이 가지고 있다.
   // - LinkedBlockingQueue 등도 같은 방식으로 동작한다.
-
+  //
   // JavaScript는 Non-Blocking
   // - 병렬 작업을 브라우저나 런타임에 위임하고, 나머지 코드를 계속 수행한다.
   // - 제어권을 유지하면서 다음 작업을 처리할 수 있기 때문에 Non-Blocking 이다.
-
-
+  //
+  //
   // 비동기로 실행되는 함수가 끝나는 시점과, 다음 로직이 시작되는 시점을 맞추지 않음
   // 여러개의 비동기 작업 중 작업순서를 맞춰야하는 경우, callback 함수 안에서 다음 수행해야할 비동기작업을 시작
   // callback hell 이슈가 발생
